@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Contact | Velvet & Glow</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Get in touch with Madeeha Tariq and Afshan Habib from Velvet & Glow for fashion, jewellery, and skincare inquiries." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fffaf7, #ffffff);
+      color: #2f2f2f;
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 25px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #f1e6e2;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #c07a6d;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-size: 14px;
+      color: #444;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: #c07a6d;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after { width: 100%; }
+
+    .hero {
+      padding: 120px 20px 60px;
+      text-align: center;
+      background: radial-gradient(circle at top, #fceeea, #fffaf7);
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      max-width: 600px;
+      margin: auto;
+      color: #555;
+    }
+
+    .contact-section {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 25px;
+      text-align: center;
+    }
+
+    .contact-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 40px;
+      color: #c07a6d;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 30px 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+      transition: 0.3s ease;
+      text-align: center;
+    }
+
+    .card:hover { transform: translateY(-8px); }
+
+    .card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #c07a6d;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .card a {
+      text-decoration: none;
+      font-size: 14px;
+      color: #c07a6d;
+      font-weight: 500;
+    }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      background: #ffffff;
+      border-top: 1px solid #f1e6e2;
+    }
+
+    footer a { color: #c07a6d; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; }
+      nav { margin-top: 15px; }
+      .hero h2 { font-size: 34px; }
+      .contact-section { padding: 0 15px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+
+  <header>
+  <h1>Velvet & Glow</h1>
+  <nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+
+    {% if session.get('logged_in') %}
+      <a href="{{ url_for('upload_product') }}">Upload</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+  </nav>
+</header>
+
+
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>Get in Touch</h2>
+    <p>We’d love to hear from you! Whether it’s a question, collaboration, or feedback, reach out to us below.</p>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <h3>Contact Information</h3>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Madeeha Tariq</h4>
+        <p>Email:</p>
+        <a href="mailto:madeeha.t.1.7@gmail.com">madeeha.t.1.7@gmail.com</a>
+      </div>
+
+      <div class="card">
+        <h4>Afshan Habib</h4>
+        <p>Email:</p>
+        <a href="mailto:afshanhabib20437@gmail.com">afshanhabib20437@gmail.com</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Velvet & Glow · <a href="{{ url_for('home') }}">Home</a>
+  </footer>
+
+</body>
+</html>

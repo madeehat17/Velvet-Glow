@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>About | Velvet & Glow</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Learn more about Velvet & Glow, a blog focused on fashion, jewellery, and skincare with honest reviews and recommendations." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fffaf7, #ffffff);
+      color: #2f2f2f;
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 25px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #f1e6e2;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #c07a6d;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-size: 14px;
+      color: #444;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: #c07a6d;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after { width: 100%; }
+
+    .hero {
+      padding: 120px 20px 60px;
+      text-align: center;
+      background: radial-gradient(circle at top, #fceeea, #fffaf7);
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      max-width: 600px;
+      margin: auto;
+      color: #555;
+    }
+
+    .about-section {
+      max-width: 1000px;
+      margin: 60px auto;
+      padding: 0 25px;
+      text-align: center;
+    }
+
+    .about-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: #c07a6d;
+    }
+
+    .about-section p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 30px 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+      transition: 0.3s ease;
+    }
+
+    .card:hover { transform: translateY(-8px); }
+
+    .card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      margin-bottom: 12px;
+      color: #c07a6d;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 13px;
+      background: #ffffff;
+      border-top: 1px solid #f1e6e2;
+    }
+
+    footer a { color: #c07a6d; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; }
+      nav { margin-top: 15px; }
+      .hero h2 { font-size: 34px; }
+      .about-section { padding: 0 15px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  
+  <header>
+  <h1>Velvet & Glow</h1>
+  <nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+
+    {% if session.get('logged_in') %}
+      <a href="{{ url_for('upload_product') }}">Upload</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+  </nav>
+</header>
+
+
+
+  <section class="hero">
+    <h2>Welcome to Velvet & Glow</h2>
+    <p>Your go-to space for timeless fashion, elegant jewellery, and glowing skincare tips.</p>
+  </section>
+
+  <section class="about-section">
+    <h3>Our Story</h3>
+    <p>
+      Velvet & Glow started as a passion for everything that makes you feel confident and radiant.
+      From curated fashion finds to skincare routines that actually work, we strive to help our users
+      look and feel their best every day.
+    </p>
+    <p>
+      We believe in honest product recommendations and share only the items we truly love.
+      Some links on this site are affiliate links, which help support this blog at no extra cost to you.
+    </p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>Fashion Inspiration</h4>
+        <p>Discover outfit ideas, styling tips, and wardrobe staples for every occasion.</p>
+      </div>
+      <div class="card">
+        <h4>Jewellery Picks</h4>
+        <p>Minimal and statement pieces that add a touch of elegance to your look.</p>
+      </div>
+      <div class="card">
+        <h4>Skincare Tips</h4>
+        <p>Simple routines, products, and glow-up advice for healthy skin.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Velvet & Glow
+  </footer>
+
+</body>
+</html>

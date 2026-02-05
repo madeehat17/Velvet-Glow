@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Blog | Velvet & Glow</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Explore fashion, jewellery and skincare blogs by Velvet & Glow. Honest reviews and curated recommendations." />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(180deg, #fffaf7, #ffffff);
+      color: #2f2f2f;
+      line-height: 1.7;
+    }
+
+    header {
+      padding: 25px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid #f1e6e2;
+    }
+
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: #c07a6d;
+      letter-spacing: 1px;
+    }
+
+    nav a {
+      margin-left: 28px;
+      text-decoration: none;
+      font-size: 14px;
+      color: #444;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      background: #c07a6d;
+      transition: 0.3s;
+    }
+
+    nav a:hover::after { width: 100%; }
+
+    .page-title {
+      padding: 90px 20px 60px;
+      text-align: center;
+      background: radial-gradient(circle at top, #fceeea, #fffaf7);
+    }
+
+    .page-title h2 { font-family: 'Playfair Display', serif; font-size: 42px; margin-bottom: 12px; }
+    .page-title p { max-width: 600px; margin: auto; font-size: 15px; color: #555; }
+
+    .blog-section { padding: 80px 60px; max-width: 1200px; margin: auto; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+    .post {
+      background: #ffffff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+      transition: 0.3s ease;
+    }
+
+    .post:hover { transform: translateY(-8px); }
+    .post img { width: 100%; height: 220px; object-fit: cover; }
+    .post-content { padding: 28px; }
+    .tag { display: inline-block; font-size: 12px; padding: 4px 12px; background: #fceeea; color: #c07a6d; border-radius: 20px; margin-bottom: 12px; }
+    .post h3 { font-family: 'Playfair Display', serif; font-size: 22px; margin-bottom: 10px; }
+    .post p { font-size: 14px; color: #666; margin-bottom: 18px; }
+    .post a { text-decoration: none; font-size: 14px; color: #c07a6d; font-weight: 500; }
+
+    footer { padding: 40px; text-align: center; font-size: 13px; background: #ffffff; border-top: 1px solid #f1e6e2; }
+    footer a { color: #c07a6d; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      header { flex-direction: column; }
+      nav { margin-top: 15px; }
+      .page-title h2 { font-size: 34px; }
+      .blog-section { padding: 60px 25px; }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <header>
+  <h1>Velvet & Glow</h1>
+  <nav>
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+
+    {% if session.get('logged_in') %}
+      <a href="{{ url_for('upload_product') }}">Upload</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+    {% endif %}
+  </nav>
+</header>
+
+  </header>
+
+  <section class="page-title">
+    <h2>The Velvet Journal</h2>
+    <p>Curated fashion finds, jewellery edits and skincare routines — thoughtfully written for you.</p>
+  </section>
+
+  <section class="blog-section">
+    <div class="blog-grid">
+
+      <div class="post">
+        <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80" alt="Jewellery flatlay">
+        <div class="post-content">
+          <span class="tag">Jewellery</span>
+          <h3>Minimal Jewellery Pieces You’ll Wear Every Day</h3>
+          <p>Delicate chains, everyday rings and timeless pieces that elevate every outfit.</p>
+          <a href="#">Read More →</a>
+        </div>
+      </div>
+
+      <div class="post">
+        <img src="https://plus.unsplash.com/premium_photo-1684407616442-8d5a1b7c978e?q=80&w=1470&auto=format&fit=crop" alt="Skincare products">
+        <div class="post-content">
+          <span class="tag">Skincare</span>
+          <h3>Simple Skincare Routine for Glowing Skin</h3>
+          <p>A no-stress routine with gentle products that actually work.</p>
+          <a href="#">Read More →</a>
+        </div>
+      </div>
+
+      <div class="post">
+        <img src="https://plus.unsplash.com/premium_photo-1668485967898-f8b450c821df?q=80&w=687&auto=format&fit=crop" alt="Fashion outfit">
+        <div class="post-content">
+          <span class="tag">Fashion</span>
+          <h3>Affordable Fashion Staples Every Wardrobe Needs</h3>
+          <p>Versatile pieces you can mix, match and re-wear all year long.</p>
+          <a href="#">Read More →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    © 2026 Velvet & Glow
+  </footer>
+</body>
+</html>
