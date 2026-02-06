@@ -1,13 +1,37 @@
 from flask import Flask, request, redirect, render_template, session, url_for
-import csv
 from functools import wraps
+import sqlite3
+import os
 
 app = Flask(__name__)
-app.secret_key = "your_secret_key_here"  # needed for sessions
+app.secret_key = "your_secret_key_here"  # Needed for sessions
 
 # Owner credentials
 OWNER_USERNAME = "madeeha"
 OWNER_PASSWORD = "velvet123"
+
+# Database setup
+DB_PATH = "products.db"
+
+def init_db():
+    """Initialize the database and create tables if they don't exist."""
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS products (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            image TEXT,
+            title TEXT,
+            description TEXT,
+            link TEXT
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+# Initialize DB on startup
+init_db()
 
 # Login required decorator
 def login_required(f):
@@ -69,29 +93,32 @@ def upload_product():
         link = request.form.get("link")
 
         if category in categories:
-            filename = f"products/{category}.csv"
-            with open(filename, "a", newline="", encoding="utf-8") as file:
-                writer = csv.writer(file)
-                writer.writerow([image, title, description, link])
+            conn = sqlite3.connect(DB_PATH)
+            cursor = conn.cursor()
+            cursor.execute(
+                "INSERT INTO products (category, image, title, description, link) VALUES (?, ?, ?, ?, ?)",
+                (category, image, title, description, link)
+            )
+            conn.commit()
+            conn.close()
             message = f"{title} added to {category}!"
     return render_template("upload.html", categories=categories, message=message)
 
 # Display products dynamically on category pages
 def load_products(category):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT image, title, description, link FROM products WHERE category = ?", (category,))
+    rows = cursor.fetchall()
+    conn.close()
     products = []
-    try:
-        with open(f"products/{category}.csv", "r", encoding="utf-8") as file:
-            reader = csv.reader(file)
-            for row in reader:
-                if len(row) == 4:
-                    products.append({
-                        "image": row[0],
-                        "title": row[1],
-                        "description": row[2],
-                        "link": row[3]
-                    })
-    except FileNotFoundError:
-        pass
+    for row in rows:
+        products.append({
+            "image": row[0],
+            "title": row[1],
+            "description": row[2],
+            "link": row[3]
+        })
     return products
 
 @app.route("/fashion")
@@ -110,6 +137,5 @@ def skincare():
     return render_template("skincare.html", products=products)
 
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 3000))
     app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
